@@ -257,8 +257,8 @@
 
         const Certifications = () => {
             const certificationData = [
-                { name: "ACP-420 Atlassian Certified Jira Service Project Manager", issuer: "Atlassian", date: "Issued Feb 2022", expires: "Expires Mar 2026" },
-                { name: "ACP-100 Atlassian Certified Jira Administrator for Data Center and Server", issuer: "Atlassian", date: "Issued Dec 2021", expires: "Expires Mar 2026" },
+                { name: "ACP-420 Atlassian Certified Jira Service Project Manager", issuer: "Atlassian", date: "Issued Feb 2022" },
+                { name: "ACP-100 Atlassian Certified Jira Administrator for Data Center and Server", issuer: "Atlassian", date: "Issued Dec 2021" },
                 { name: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft", date: "Issued June 15, 2025" }
             ];
 
@@ -276,12 +276,6 @@
                                     <p className="text-slate-400 font-medium mt-1">{item.issuer}</p>
                                     <div className="flex items-center gap-2 text-slate-500 text-xs font-medium uppercase tracking-wider mt-3">
                                         <span>{item.date}</span>
-                                        {item.expires && (
-                                            <>
-                                                <span className="w-1 h-1 rounded-full bg-slate-700"></span>
-                                                <span className="text-cyan-500/70">{item.expires}</span>
-                                            </>
-                                        )}
                                     </div>
                                 </div>
                             </div>
