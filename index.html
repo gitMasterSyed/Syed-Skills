@@ -1,16 +1,312 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Syed Sajid | Portfolio</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-slate-900 text-slate-300">
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Motion via CDN is sometimes tricky, let's use a standard animation approach if Motion is unavailable, or use framer-motion UMD if possible -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .text-neon {
+            color: #22d3ee;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.2);
+        }
+    </style>
+</head>
+<body>
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { motion } = window.Motion || { motion: { div: 'div', h1: 'h1', h2: 'h2', section: 'section' } };
+
+        // Simple Icon Component using Lucide
+        const Icon = ({ name, className = "w-5 h-5" }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, []);
+            return <i data-lucide={name} className={className}></i>;
+        };
+
+        const Header = () => (
+            <header className="overflow-hidden">
+                <div className="text-center">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 tracking-tight">
+                        Syed Sajid
+                    </h1>
+                    <h2 className="mt-4 text-xl md:text-2xl font-medium text-cyan-300/90">
+                        Enterprise Applications & Integration Specialist
+                    </h2>
+                    <p className="mt-6 max-w-3xl mx-auto text-lg text-slate-400 leading-relaxed">
+                        13+ years of experience driving enterprise integration, application governance, and digital transformation. Expert in architecting and managing Atlassian ecosystems and automating business processes.
+                    </p>
+                </div>
+                
+                <div className="mt-10 flex justify-center items-center gap-6 md:gap-8 flex-wrap">
+                    <a href="mailto:mailsyedsajid@gmail.com" className="flex items-center gap-2.5 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
+                        <div className="p-2 rounded-full bg-slate-800 group-hover:bg-cyan-900/30 transition-colors">
+                            <Icon name="mail" />
+                        </div>
+                        <span className="font-medium">mailsyedsajid@gmail.com</span>
+                    </a>
+                    <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
+                        <div className="p-2 rounded-full bg-slate-800 group-hover:bg-cyan-900/30 transition-colors">
+                            <Icon name="linkedin" />
+                        </div>
+                        <span className="font-medium">LinkedIn</span>
+                    </a>
+                    <div className="flex items-center gap-2.5 text-slate-300 group">
+                        <div className="p-2 rounded-full bg-slate-800">
+                            <Icon name="phone" className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <span className="font-medium">+971508355902</span>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-slate-300 group">
+                        <div className="p-2 rounded-full bg-slate-800">
+                            <Icon name="phone" className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <span className="font-medium">+918050374251</span>
+                    </div>
+                </div>
+            </header>
+        );
+
+        const Skills = () => {
+            const skillsData = [
+                { category: "Atlassian Suite", icon: "database", skills: ["Jira", "Confluence", "JSM", "Data Center & Cloud", "ScriptRunner", "Groovy"] },
+                { category: "Integrations & Automation", icon: "zap", skills: ["DocuSign", "GitHub", "Microsoft Teams", "Slack", "ChatGPT", "Greenhouse"] },
+                { category: "Cloud & DevOps", icon: "cloud", skills: ["AWS Route 53", "Infrastructure Modernization", "DNS Management"] },
+                { category: "Security & Identity", icon: "shield", skills: ["Microsoft Entra ID", "SSO", "GlobalSign Certificates", "Compliance Frameworks"] },
+                { category: "Legacy Expertise", icon: "layers", skills: ["jQuery", "Kendo UI", "Spring Framework", "CSS", "JavaScript"] }
+            ];
+
+            return (
+                <section id="skills" className="scroll-mt-20">
+                    <h2 className="text-3xl font-bold text-slate-100 mb-10">Technical Expertises</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {skillsData.map((item, idx) => (
+                            <div key={idx} className="bg-slate-800/20 p-6 rounded-xl border border-slate-700/30 hover:border-cyan-500/30 transition-all duration-300">
+                                <div className="flex items-center gap-3 mb-5">
+                                    <div className="text-cyan-400"><Icon name={item.icon} className="w-6 h-6" /></div>
+                                    <h3 className="text-lg font-bold text-slate-100 tracking-tight">{item.category}</h3>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {item.skills.map((skill, sIdx) => (
+                                        <span key={sIdx} className="bg-slate-800/80 text-cyan-300/90 text-xs font-semibold px-2.5 py-1 rounded border border-slate-700/50 hover:border-cyan-500/50 transition-all cursor-default uppercase">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Certifications = () => {
+            const certificationData = [
+                { name: "ACP-420 Atlassian Certified Jira Service Project Manager", issuer: "Atlassian", date: "Issued Feb 2022", expires: "Expires Mar 2026" },
+                { name: "ACP-100 Atlassian Certified Jira Administrator for Data Center and Server", issuer: "Atlassian", date: "Issued Dec 2021", expires: "Expires Mar 2026" },
+                { name: "Microsoft Certified: Azure AI Fundamentals", issuer: "Microsoft", date: "Issued June 15, 2025" }
+            ];
+
+            return (
+                <section id="certifications" className="scroll-mt-20">
+                    <h2 className="text-3xl font-bold text-slate-100 mb-10">Licenses & Certifications</h2>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {certificationData.map((item, idx) => (
+                            <div key={idx} className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300 group flex items-start gap-5 shadow-sm">
+                                <div className="flex-shrink-0 p-3 rounded-lg bg-slate-900/50 group-hover:bg-cyan-900/30 transition-colors">
+                                    <Icon name="award" className="w-8 h-8 text-cyan-400" />
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-slate-100 group-hover:text-cyan-100 transition-colors leading-tight">{item.name}</h3>
+                                    <p className="text-slate-400 font-medium mt-1">{item.issuer}</p>
+                                    <div className="flex items-center gap-2 text-slate-500 text-xs font-medium uppercase tracking-wider mt-3">
+                                        <span>{item.date}</span>
+                                        {item.expires && (
+                                            <>
+                                                <span className="w-1 h-1 rounded-full bg-slate-700"></span>
+                                                <span className="text-cyan-500/70">{item.expires}</span>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Experience = () => {
+            const experienceData = [
+                {
+                    role: "Consultant Cloud Operations Specialist",
+                    company: "Sundus Recruitment and Outsourcing Services",
+                    duration: "Mar 2024 - Present",
+                    achievements: [
+                        "Led Atlassian instance migrations across cloud and on-premises environments.",
+                        "Implemented integrations with DocuSign, GitHub, Microsoft Teams, Slack, and ChatGPT.",
+                        "Enforced identity governance and SSO via Microsoft Entra ID.",
+                        "Managed 33+ AWS Route 53 hosted zones, ensuring high availability.",
+                        "Designed and governed organization-wide email signature frameworks."
+                    ]
+                },
+                {
+                    role: "Atlassian Expert",
+                    company: "PractiProject | Atlassian Platinum Solution Partner",
+                    duration: "Feb 2022 - Feb 2024",
+                    achievements: [
+                        "Spearheaded JIRA (8.4 to 9.12.x) and Confluence (7.13.x to 8.5.x) migrations.",
+                        "Re-architected and optimized legacy Atlassian solutions, improving reliability and speed.",
+                        "Designed and implemented advanced Groovy scripts to automate complex workflows.",
+                        "Championed the adoption of new features and technologies within the Atlassian suite."
+                    ]
+                },
+                {
+                    role: "Senior Software Consultant",
+                    company: "Etisalat UAE",
+                    duration: "May 2014 - Jan 2022",
+                    achievements: [
+                        "Integrated assignment-level and annual appraisal lifecycle processes.",
+                        "Spearheaded the implementation of a risk management system.",
+                        "Managed system access for 1000+ local and remote users.",
+                        "Migrated Jira from version 6.2 to the latest version."
+                    ]
+                },
+                {
+                    role: "Software Engineer",
+                    company: "CenturyLink & L&T IES",
+                    duration: "Jan 2011 - Apr 2014",
+                    achievements: [
+                        "Analyzed requirements and provided technical solutions.",
+                        "Developed custom widgets using jQuery UI, HighCharts, and Kendo framework.",
+                        "Maintained coding standards by analyzing and reviewing code in SONAR.",
+                        "Configured and wrote Spring DAO classes to accomplish requirements."
+                    ]
+                }
+            ];
+
+            return (
+                <section id="experience" className="scroll-mt-20">
+                    <h2 className="text-3xl font-bold text-slate-100 mb-10 flex items-center gap-4">
+                        <span className="h-px flex-1 bg-slate-800"></span>
+                        Work Experience
+                        <span className="h-px flex-1 bg-slate-800"></span>
+                    </h2>
+                    <div className="relative border-l-2 border-slate-800 ml-4 sm:ml-6">
+                        {experienceData.map((item, idx) => (
+                            <div key={idx} className="relative pl-8 sm:pl-12 py-8 group">
+                                <div className="z-10 bg-slate-800 h-10 w-10 absolute left-[-21px] sm:left-[-21px] top-6 rounded-full flex items-center justify-center ring-4 ring-slate-900 group-hover:ring-cyan-500/30 transition-all duration-300">
+                                    <Icon name="briefcase" className="h-5 w-5 text-cyan-400" />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-100">{item.role}</h3>
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center sm:gap-4 mb-4">
+                                    <p className="text-cyan-400/90 font-semibold">{item.company}</p>
+                                    <span className="text-slate-600 hidden sm:block">•</span>
+                                    <p className="text-slate-500 font-medium text-sm">{item.duration}</p>
+                                </div>
+                                <ul className="space-y-3 mt-4">
+                                    {item.achievements.map((achievement, i) => (
+                                        <li key={i} className="flex items-start gap-3 group/item text-slate-400 hover:text-slate-300 transition-colors leading-relaxed">
+                                            <Icon name="chevron-right" className="w-5 h-5 mt-0.5 text-cyan-500/50" />
+                                            <span>{achievement}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Education = () => (
+            <section id="education" className="scroll-mt-20">
+                <h2 className="text-3xl font-bold text-slate-100 mb-8">Education</h2>
+                <div className="bg-slate-800/30 border border-slate-700/50 p-8 rounded-2xl flex flex-col md:flex-row items-center md:items-start gap-6 hover:bg-slate-800/50 transition-colors group">
+                    <div className="flex-shrink-0 p-4 rounded-xl bg-slate-900 group-hover:bg-cyan-900/20 transition-colors">
+                        <Icon name="graduation-cap" className="w-10 h-10 text-cyan-400" />
+                    </div>
+                    <div className="text-center md:text-left">
+                        <h3 className="font-bold text-slate-100 text-2xl group-hover:text-cyan-100 transition-colors">B.Tech, Computer Science and Engineering</h3>
+                        <p className="text-slate-400 font-medium text-lg mt-1">JNT University</p>
+                        <p className="text-slate-500 font-semibold mt-2 tracking-wide">2004 - 2008</p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="bg-slate-900 border-t border-slate-800/50 mt-32">
+                <div className="container mx-auto max-w-5xl px-6 py-12 text-center">
+                    <h2 className="text-xl font-bold text-slate-100 mb-6 tracking-tight italic opacity-50">Syed Sajid</h2>
+                    <div className="flex justify-center items-center gap-8 mb-8">
+                        <a href="mailto:mailsyedsajid@gmail.com" className="text-slate-400 hover:text-cyan-400 transition-colors duration-300">
+                            <Icon name="mail" className="w-6 h-6" />
+                        </a>
+                        <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors duration-300">
+                            <Icon name="linkedin" className="w-6 h-6" />
+                        </a>
+                    </div>
+                    <p className="text-sm text-slate-500 font-medium tracking-wide">
+                        &copy; {new Date().getFullYear()} SYED SAJID. ALL RIGHTS RESERVED.
+                    </p>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            return (
+                <div className="min-h-screen bg-slate-900">
+                    <main className="container mx-auto max-w-5xl px-6 py-12 md:py-20">
+                        <Header />
+                        <div className="space-y-16 md:space-y-24 mt-16 md:mt-24">
+                            <Skills />
+                            <Certifications />
+                            <Experience />
+                            <Education />
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
