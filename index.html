@@ -153,29 +153,45 @@
                         </div>
                     </div>
                     
-                    <div className="mt-12 flex flex-col md:flex-row items-center gap-10 border-t border-slate-800/50 pt-10">
-                        <div className="flex-1 flex flex-wrap items-center gap-x-10 gap-y-6">
-                            <a href="mailto:mailsyedsajid@gmail.com" className="flex items-center gap-3 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
-                                <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors">
-                                    <Icon name="mail" className="w-5 h-5 text-cyan-400" />
-                                </div>
-                                <span className="font-medium text-sm md:text-base">mailsyedsajid@gmail.com</span>
-                            </a>
-                            <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
-                                <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors">
-                                    <Icon name="linkedin" className="w-5 h-5 text-cyan-400" />
-                                </div>
-                                <span className="font-medium">LinkedIn</span>
-                            </a>
-                            <div className="flex items-center gap-3 text-slate-300 group">
-                                <div className="p-2.5 rounded-full bg-slate-800">
-                                    <Icon name="phone" className="w-5 h-5 text-cyan-400" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="font-medium text-sm leading-tight">+971508355902</span>
-                                    <span className="font-medium text-xs leading-tight text-slate-500 mt-1">+918050374251</span>
-                                </div>
-                            </div>
+                    <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-slate-800/50 pt-12">
+                        <div className="flex-1 w-full md:w-auto">
+                            <ul className="flex flex-col gap-5">
+                                <li>
+                                    <a href="mailto:mailsyedsajid@gmail.com" className="flex items-center gap-4 text-slate-300 hover:text-cyan-300 transition-all duration-300 group max-w-fit">
+                                        <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors ring-1 ring-slate-700/50 group-hover:ring-cyan-500/30">
+                                            <Icon name="mail" className="w-5 h-5 text-cyan-400" />
+                                        </div>
+                                        <span className="font-medium text-sm md:text-base border-b border-transparent group-hover:border-cyan-500/30 pb-0.5">mailsyedsajid@gmail.com</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-slate-300 hover:text-cyan-300 transition-all duration-300 group max-w-fit">
+                                        <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors ring-1 ring-slate-700/50 group-hover:ring-cyan-500/30">
+                                            <Icon name="linkedin" className="w-5 h-5 text-cyan-400" />
+                                        </div>
+                                        <span className="font-medium text-sm md:text-base border-b border-transparent group-hover:border-cyan-500/30 pb-0.5">LinkedIn</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div className="flex items-center gap-4 text-slate-300 group max-w-fit">
+                                        <div className="p-2.5 rounded-full bg-slate-800 ring-1 ring-slate-700/50">
+                                            <Icon name="phone" className="w-5 h-5 text-cyan-400" />
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <a href="tel:+971508355902" className="font-medium text-sm md:text-base hover:text-cyan-300 transition-colors">+971 50 835 5902 <span className="text-[10px] text-slate-500 uppercase ml-1">(UAE)</span></a>
+                                            <a href="tel:+918050374251" className="font-medium text-sm md:text-base hover:text-cyan-300 transition-colors">+91 80503 74251 <span className="text-[10px] text-slate-500 uppercase ml-1">(IN)</span></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="/CV_SYED_SAJID.pdf" download className="flex items-center gap-4 text-slate-300 hover:text-cyan-300 transition-all duration-300 group max-w-fit mt-1">
+                                        <div className="p-2.5 rounded-full bg-gradient-to-r from-cyan-600 to-sky-600 shadow-lg group-hover:shadow-cyan-500/30 ring-1 ring-cyan-500/30 transition-all">
+                                            <Icon name="download" className="w-5 h-5 text-white" />
+                                        </div>
+                                        <span className="font-bold text-sm md:text-base text-cyan-400 group-hover:text-cyan-300">Download my CV</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
 
                         {/* Large, Clear QR Code with Image Overlay */}
