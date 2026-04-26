@@ -1,7 +1,8 @@
 
 import React from 'react';
 import type { CertificationItem } from '../types';
-import { CertificateIcon } from './icons/IconComponents';
+import { Award } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const certificationData: CertificationItem[] = [
     {
@@ -23,26 +24,40 @@ const certificationData: CertificationItem[] = [
     },
 ];
 
-const CertificationCard: React.FC<{ item: CertificationItem }> = ({ item }) => (
-    <div className="bg-slate-800/50 p-6 rounded-lg border border-slate-700 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-900/50 hover:-translate-y-1 group flex items-start gap-4">
-        <div className="flex-shrink-0">
-            <CertificateIcon className="w-8 h-8 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+const CertificationCard: React.FC<{ item: CertificationItem; index: number }> = ({ item, index }) => (
+    <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: index * 0.1 }}
+        className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-900/20 group flex items-start gap-5 shadow-sm"
+    >
+        <div className="flex-shrink-0 p-3 rounded-lg bg-slate-900/50 group-hover:bg-cyan-900/30 transition-colors">
+            <Award className="w-8 h-8 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
         </div>
         <div>
-            <h3 className="font-bold text-slate-100">{item.name}</h3>
-            <p className="text-slate-400 font-medium">{item.issuer}</p>
-            <p className="text-slate-500 text-sm mt-1">{item.date}{item.expires && ` - ${item.expires}`}</p>
+            <h3 className="font-bold text-slate-100 group-hover:text-cyan-100 transition-colors leading-tight">{item.name}</h3>
+            <p className="text-slate-400 font-medium mt-1">{item.issuer}</p>
+            <div className="flex items-center gap-2 text-slate-500 text-xs font-medium uppercase tracking-wider mt-3">
+                <span>{item.date}</span>
+                {item.expires && (
+                    <>
+                        <span className="w-1 h-1 rounded-full bg-slate-700"></span>
+                        <span className="text-cyan-500/70">{item.expires}</span>
+                    </>
+                )}
+            </div>
         </div>
-    </div>
+    </motion.div>
 );
 
 const Certifications: React.FC = () => {
     return (
-        <section id="certifications">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-8">Licenses & Certifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="certifications" className="scroll-mt-20">
+            <h2 className="text-3xl font-bold text-slate-100 mb-10 text-center md:text-left">Licenses & Certifications</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {certificationData.map((item, index) => (
-                    <CertificationCard key={index} item={item} />
+                    <CertificationCard key={index} item={item} index={index} />
                 ))}
             </div>
         </section>

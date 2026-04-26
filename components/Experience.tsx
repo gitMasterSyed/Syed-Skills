@@ -1,7 +1,8 @@
 
 import React from 'react';
 import type { ExperienceItem } from '../types';
-import { BriefcaseIcon, ChevronRightIcon } from './icons/IconComponents';
+import { Briefcase, ChevronRight } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const experienceData: ExperienceItem[] = [
   {
@@ -52,38 +53,48 @@ const experienceData: ExperienceItem[] = [
 ];
 
 
-const ExperienceCard: React.FC<{ item: ExperienceItem }> = ({ item }) => (
-    <div className="relative pl-8 sm:pl-12 py-6 group rounded-lg transition-colors duration-300 hover:bg-slate-800/50">
-        <div className="flex items-center mb-1 sm:mb-0">
-            <div className="z-10 bg-slate-700 h-8 w-8 absolute left-0 sm:left-2 -top-1 sm:top-1.5 rounded-full flex items-center justify-center ring-4 ring-slate-900 group-hover:bg-cyan-900/50 group-hover:ring-cyan-400/30 transition-all duration-300">
-                <BriefcaseIcon className="h-4 w-4 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300" />
+const ExperienceCard: React.FC<{ item: ExperienceItem; index: number }> = ({ item, index }) => (
+    <motion.div 
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative pl-8 sm:pl-12 py-8 group"
+    >
+        <div className="flex items-center mb-1">
+            <div className="z-10 bg-slate-800 h-10 w-10 absolute left-0 sm:left-2 top-6 rounded-full flex items-center justify-center ring-4 ring-slate-900 group-hover:ring-cyan-500/30 transition-all duration-300">
+                <Briefcase className="h-5 w-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
             </div>
-            <h3 className="text-lg font-bold text-slate-100">{item.role}</h3>
+            <h3 className="text-xl font-bold text-slate-100">{item.role}</h3>
         </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center sm:gap-4 mb-3">
-             <p className="text-cyan-400 font-medium">{item.company}</p>
-             <span className="text-slate-500 text-sm hidden sm:block">|</span>
-             <p className="text-slate-500 text-sm">{item.duration}</p>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center sm:gap-4 mb-4">
+             <p className="text-cyan-400/90 font-semibold">{item.company}</p>
+             <span className="text-slate-600 hidden sm:block">•</span>
+             <p className="text-slate-500 font-medium text-sm">{item.duration}</p>
         </div>
        
-        <ul className="space-y-2 mt-2">
-            {item.achievements.map((achievement, index) => (
-                <li key={index} className="flex items-start">
-                    <ChevronRightIcon className="w-5 h-5 mt-0.5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-slate-400">{achievement}</span>
+        <ul className="space-y-3 mt-4">
+            {item.achievements.map((achievement, i) => (
+                <li key={i} className="flex items-start gap-3 group/item">
+                    <ChevronRight className="w-5 h-5 mt-0.5 text-cyan-500/50 group-hover/item:text-cyan-400 transition-colors flex-shrink-0" />
+                    <span className="text-slate-400 group-hover/item:text-slate-300 transition-colors leading-relaxed">{achievement}</span>
                 </li>
             ))}
         </ul>
-    </div>
+    </motion.div>
 );
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience">
-      <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-8">Work Experience</h2>
-      <div className="relative border-l-2 border-slate-700">
+    <section id="experience" className="scroll-mt-20">
+      <h2 className="text-3xl font-bold text-slate-100 mb-10 flex items-center gap-4">
+        <span className="h-px flex-1 bg-slate-800"></span>
+        Work Experience
+        <span className="h-px flex-1 bg-slate-800"></span>
+      </h2>
+      <div className="relative border-l-2 border-slate-800 ml-4 sm:ml-6">
         {experienceData.map((item, index) => (
-          <ExperienceCard key={index} item={item} />
+          <ExperienceCard key={index} item={item} index={index} />
         ))}
       </div>
     </section>
