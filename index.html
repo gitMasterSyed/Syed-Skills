@@ -179,19 +179,12 @@
                                 <div className="p-3 bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-300 border border-slate-100">
                                     <div className="relative">
                                         <div ref={qrRef} className="rounded-lg overflow-hidden" style={{ width: '200px', height: '200px' }}></div>
-                                        {/* Center Image Overlay */}
+                                        {/* Center Text Overlay */}
                                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                            <div className="w-12 h-12 bg-white p-1 rounded-lg shadow-md flex items-center justify-center overflow-hidden border border-slate-100">
-                                                <img 
-                                                    src="/profile.jpg" 
-                                                    alt="Syed Sajid" 
-                                                    className="w-full h-full object-cover rounded"
-                                                    onLoad={() => console.log("QR overlay image loaded")}
-                                                    onError={(e) => {
-                                                        console.error("QR overlay image failed, trying fallback");
-                                                        e.target.src = "https://ui-avatars.com/api/?name=Syed+Sajid&background=0891b2&color=fff";
-                                                    }}
-                                                />
+                                            <div className="w-16 h-16 bg-white p-2 rounded-xl shadow-lg flex items-center justify-center border-2 border-cyan-500">
+                                                <div className="text-[9px] font-black leading-tight text-slate-900 text-center uppercase tracking-tight">
+                                                    Scan to<br/>Save<br/>Contact
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
