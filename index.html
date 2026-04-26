@@ -122,7 +122,7 @@
                             height: 200,
                             colorDark: "#000000",
                             colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.L
+                            correctLevel: QRCode.CorrectLevel.H
                         });
                     }
                 };
@@ -143,7 +143,7 @@
                                 Enterprise Applications & Integration Specialist
                             </h2>
                             <p className="mt-6 max-w-2xl text-lg text-slate-400 leading-relaxed">
-                                13+ years of experience driving enterprise integration, application governance, and digital transformation. Expert in architecting and managing Atlassian ecosystems and automating business processes.
+                                15+ years of experience driving enterprise integration, application governance, and digital transformation across telecom, consulting, and IT services. Architect and expert in Atlassian ecosystems and enterprise platform migrations.
                             </p>
                         </div>
                     </div>
@@ -173,11 +173,28 @@
                             </div>
                         </div>
 
-                        {/* Large, Clear QR Code */}
+                        {/* Large, Clear QR Code with Image Overlay */}
                         <div className="flex-shrink-0">
                             <div className="group relative">
                                 <div className="p-3 bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-300 border border-slate-100">
-                                    <div ref={qrRef} className="rounded-lg overflow-hidden" style={{ width: '200px', height: '200px' }}></div>
+                                    <div className="relative">
+                                        <div ref={qrRef} className="rounded-lg overflow-hidden" style={{ width: '200px', height: '200px' }}></div>
+                                        {/* Center Image Overlay */}
+                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                            <div className="w-12 h-12 bg-white p-1 rounded-lg shadow-md flex items-center justify-center overflow-hidden border border-slate-100">
+                                                <img 
+                                                    src="/profile.jpg" 
+                                                    alt="Syed Sajid" 
+                                                    className="w-full h-full object-cover rounded"
+                                                    onLoad={() => console.log("QR overlay image loaded")}
+                                                    onError={(e) => {
+                                                        console.error("QR overlay image failed, trying fallback");
+                                                        e.target.src = "https://ui-avatars.com/api/?name=Syed+Sajid&background=0891b2&color=fff";
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-[10px] font-bold text-cyan-400 px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-800 uppercase tracking-widest">
                                     Scan Contact
@@ -191,11 +208,11 @@
 
         const Skills = () => {
             const skillsData = [
-                { category: "Atlassian Suite", icon: "database", skills: ["Jira", "Confluence", "JSM", "Data Center & Cloud", "ScriptRunner", "Groovy"] },
-                { category: "Integrations & Automation", icon: "zap", skills: ["DocuSign", "GitHub", "Microsoft Teams", "Slack", "ChatGPT", "Greenhouse"] },
-                { category: "Cloud & DevOps", icon: "cloud", skills: ["AWS Route 53", "Infrastructure Modernization", "DNS Management"] },
-                { category: "Security & Identity", icon: "shield", skills: ["Microsoft Entra ID", "SSO", "GlobalSign Certificates", "Compliance Frameworks"] },
-                { category: "Legacy Expertise", icon: "layers", skills: ["jQuery", "Kendo UI", "Spring Framework", "CSS", "JavaScript"] }
+                { category: "Atlassian Ecosystem", icon: "database", skills: ["Jira", "Confluence", "JSM (Service Management)", "Cloud & Data Center", "ScriptRunner", "Groovy Automation"] },
+                { category: "Integrations & AI", icon: "zap", skills: ["DocuSign", "GitHub", "Microsoft Teams & Copilot", "Slack", "ChatGPT", "Greenhouse", "Adobe Admin"] },
+                { category: "Identity & Security", icon: "shield", skills: ["Microsoft Entra ID (SSO)", "Identity Governance", "GlobalSign Certificates", "Compliance Frameworks"] },
+                { category: "Infrastructure & DNS", icon: "cloud", skills: ["AWS Route 53", "DNS Management", "Migration Strategy", "Platform Optimization"] },
+                { category: "Development & Reporting", icon: "bar-chart-3", skills: ["JSM Dashboards", "C-Level Reporting", "JQuery Mobile", "HighCharts", "Spring Framework", "SONAR"] }
             ];
 
             return (
@@ -261,15 +278,16 @@
         const Experience = () => {
             const experienceData = [
                 {
-                    role: "Consultant Cloud Operations Specialist",
-                    company: "Sundus Recruitment and Outsourcing Services",
+                    role: "Enterprise Platforms Architect",
+                    company: "TII (Sundus Recruitment / AL Nahiya Group LLC)",
                     duration: "Mar 2024 - Present",
                     achievements: [
-                        "Led Atlassian instance migrations across cloud and on-premises environments.",
-                        "Implemented integrations with DocuSign, GitHub, Microsoft Teams, Slack, and ChatGPT.",
-                        "Enforced identity governance and SSO via Microsoft Entra ID.",
-                        "Managed 33+ AWS Route 53 hosted zones, ensuring high availability.",
-                        "Designed and governed organization-wide email signature frameworks."
+                        "KEY ACHIEVEMENT — ATRC Connect: Architected a unified approval platform integrating 6–10 systems (DocuSign, ITSM, SAP) into a single interface for 1,000+ users, cutting approval cycles by 80%.",
+                        "Led Atlassian Infrastructure Modernization, implementing full backup strategies and optimizing costs across multiple cloud and on-prem instances.",
+                        "Implemented Enterprise Integrations & Automation with DocuSign, GitHub, MS Teams, Slack, Copilot, ChatGPT, and Greenhouse.",
+                        "Enforced Identity & Security governance and compliance via Microsoft Entra ID SSO.",
+                        "Managed 33+ AWS Route 53 hosted zones and GlobalSign digital certificates for secure communication.",
+                        "Established JSM-based service desk models with SLA automation, reducing resolution time by 35%."
                     ]
                 },
                 {
@@ -277,32 +295,39 @@
                     company: "PractiProject | Atlassian Platinum Solution Partner",
                     duration: "Feb 2022 - Feb 2024",
                     achievements: [
-                        "Spearheaded JIRA (8.4 to 9.12.x) and Confluence (7.13.x to 8.5.x) migrations.",
-                        "Re-architected and optimized legacy Atlassian solutions, improving reliability and speed.",
-                        "Designed and implemented advanced Groovy scripts to automate complex workflows.",
-                        "Championed the adoption of new features and technologies within the Atlassian suite."
+                        "Spearheaded end-to-end migrations of JIRA (8.4 to 9.12.x) and Confluence (7.13.x to 8.5.x) with zero downtime.",
+                        "Re-architected and optimized legacy Atlassian solutions, conducting performance analysis to improve reliability and speed.",
+                        "Designed and implemented advanced Groovy scripts and integrated third-party add-ons like Comala Workflow and ScriptRunner.",
+                        "Facilitated training and knowledge transfer for internal teams on new Atlassian features and methodologies."
                     ]
                 },
                 {
-                    role: "Senior Software Consultant",
+                    role: "Enterprise Applications Lead",
                     company: "Etisalat UAE",
                     duration: "May 2014 - Jan 2022",
                     achievements: [
-                        "Integrated assignment-level and annual appraisal lifecycle processes.",
-                        "Spearheaded the implementation of a risk management system.",
-                        "Managed system access for 1000+ local and remote users.",
-                        "Migrated Jira from version 6.2 to the latest version."
+                        "Integrated assignment-level and annual appraisal lifecycle processes, enhancing operational efficiency.",
+                        "Spearheaded the implementation of a risk management system and managed access for 1,000+ users.",
+                        "Migrated Jira from version 6.2 to the latest, performing performance tuning and scaling.",
+                        "Prepared and presented IT projects and reporting dashboards to VPs and C-level leadership."
+                    ]
+                },
+                {
+                    role: "Senior Software Engineer",
+                    company: "L&T IES",
+                    duration: "Jan 2014 - Apr 2014",
+                    achievements: [
+                        "Delivered technical solutions using Kendo framework and maintained coding standards via SONAR.",
+                        "Configured Spring and Spring DAO classes to meet complex enterprise requirements."
                     ]
                 },
                 {
                     role: "Software Engineer",
-                    company: "CenturyLink & L&T IES",
-                    duration: "Jan 2011 - Apr 2014",
+                    company: "CenturyLink",
+                    duration: "Jan 2011 - Jan 2014",
                     achievements: [
-                        "Analyzed requirements and provided technical solutions.",
-                        "Developed custom widgets using jQuery UI, HighCharts, and Kendo framework.",
-                        "Maintained coding standards by analyzing and reviewing code in SONAR.",
-                        "Configured and wrote Spring DAO classes to accomplish requirements."
+                        "Developed technical solutions using JQuery Mobile, HighCharts, and custom JQuery UI widgets.",
+                        "Automated Selenium HTML-to-JUnit conversion scripts and maintained code quality via SONAR."
                     ]
                 }
             ];

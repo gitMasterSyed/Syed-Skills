@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   // This is critical for GitHub Pages project sites!
   // It ensures assets are loaded from /Syed-Skills/ instead of root.
-  base: '/Syed-Skills/',
+  base: '/',
   server: {
     port: 3000,
     host: '0.0.0.0',
