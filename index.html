@@ -47,14 +47,30 @@
     <div id="root"></div>
 
     <script type="text/babel">
+        // Log start to help debugging
+        console.log("Syed Sajid Portfolio: Script initializing...");
+
         const { useState, useEffect } = React;
-        const { motion } = window.Motion || { motion: { div: 'div', h1: 'h1', h2: 'h2', section: 'section' } };
+        
+        // Fallback for Motion if the CDN fails or global name is different
+        // In UMD, Framer Motion often exports to window.Motion
+        const motion = (window.Motion && window.Motion.motion) ? window.Motion.motion : {
+            div: (props) => <div {...props} />,
+            h1: (props) => <h1 {...props} />,
+            h2: (props) => <h2 {...props} />,
+            section: (props) => <section {...props} />,
+            span: (props) => <span {...props} />,
+            header: (props) => <header {...props} />,
+            li: (props) => <li {...props} />
+        };
 
         // Simple Icon Component using Lucide
         const Icon = ({ name, className = "w-5 h-5" }) => {
             useEffect(() => {
-                lucide.createIcons();
-            }, []);
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
             return <i data-lucide={name} className={className}></i>;
         };
 
@@ -305,8 +321,27 @@
             );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        try {
+            const container = document.getElementById('root');
+            if (!container) throw new Error("Root element not found");
+            
+            const root = ReactDOM.createRoot(container);
+            root.render(<App />);
+            console.log("Syed Sajid Portfolio: Render successful");
+        } catch (error) {
+            console.error("Syed Sajid Portfolio: Render failed", error);
+            const rootElement = document.getElementById('root');
+            if (rootElement) {
+                rootElement.innerHTML = `
+                    <div style="background:#1e293b; color:#ef4444; padding:2rem; border-radius:1rem; margin:2rem; border:1px solid #334155; font-family:sans-serif;">
+                        <h1 style="font-size:1.5rem; margin-bottom:1rem;">Application Error</h1>
+                        <p style="color:#94a3b8; margin-bottom:1.5rem;">There was a problem loading the portfolio. This usually happens when a remote library (CDN) fails to load.</p>
+                        <pre style="background:#0f172a; padding:1rem; border-radius:0.5rem; overflow:auto; font-size:0.875rem;">${error.message}</pre>
+                        <button onclick="window.location.reload()" style="margin-top:1.5rem; background:#0891b2; color:white; border:none; padding:0.5rem 1rem; border-radius:0.25rem; cursor:pointer;">Retry Loading</button>
+                    </div>
+                `;
+            }
+        }
     </script>
 </body>
 </html>

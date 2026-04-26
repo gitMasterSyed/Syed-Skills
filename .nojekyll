@@ -1,0 +1,2 @@
+# Tell GitHub Pages not to process this repo with Jekyll
+# This avoids issues with directories starting with underscores and helps with the single-file React routing.
