@@ -10,13 +10,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+<script>
+        // High-priority fix for "Cannot set property fetch of #<Window> which has only a getter"
+        (function() {
+            try {
+                const desc = Object.getOwnPropertyDescriptor(window, 'fetch');
+                if (desc && !desc.set && desc.configurable) {
+                    const originalFetch = window.fetch;
+                    Object.defineProperty(window, 'fetch', {
+                        get: function() { return originalFetch; },
+                        set: function(v) { console.warn("Blocked fetch overwrite"); },
+                        configurable: true,
+                        enumerable: true
+                    });
+                }
+            } catch (e) {
+                console.error("Fetch protection failed:", e);
+            }
+        })();
+    </script>
+    
     <!-- Scripts -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Motion via CDN is sometimes tricky, let's use a standard animation approach if Motion is unavailable, or use framer-motion UMD if possible -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 
     <script>
@@ -74,48 +94,116 @@
             return <i data-lucide={name} className={className}></i>;
         };
 
-        const Header = () => (
-            <header className="overflow-hidden">
-                <div className="text-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 tracking-tight">
-                        Syed Sajid
-                    </h1>
-                    <h2 className="mt-4 text-xl md:text-2xl font-medium text-cyan-300/90">
-                        Enterprise Applications & Integration Specialist
-                    </h2>
-                    <p className="mt-6 max-w-3xl mx-auto text-lg text-slate-400 leading-relaxed">
-                        13+ years of experience driving enterprise integration, application governance, and digital transformation. Expert in architecting and managing Atlassian ecosystems and automating business processes.
-                    </p>
-                </div>
-                
-                <div className="mt-10 flex justify-center items-center gap-6 md:gap-8 flex-wrap">
-                    <a href="mailto:mailsyedsajid@gmail.com" className="flex items-center gap-2.5 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
-                        <div className="p-2 rounded-full bg-slate-800 group-hover:bg-cyan-900/30 transition-colors">
-                            <Icon name="mail" />
+        const Header = () => {
+            const qrRef = React.useRef(null);
+
+            useEffect(() => {
+                const generateQR = () => {
+                    if (qrRef.current && window.QRCode) {
+                        qrRef.current.innerHTML = "";
+                        // Standardized vCard 3.0 format with CRLF line endings for maximum compatibility
+                        const vCardLines = [
+                            "BEGIN:VCARD",
+                            "VERSION:3.0",
+                            "FN:Syed Sajid",
+                            "N:Sajid;Syed;;;",
+                            "TITLE:Enterprise Apps Specialist",
+                            "TEL;TYPE=CELL:+971508355902",
+                            "TEL;TYPE=WORK:+918050374251",
+                            "EMAIL:mailsyedsajid@gmail.com",
+                            "URL:https://linkedin.com/in/syed-s-53a665aa",
+                            "END:VCARD"
+                        ];
+                        const vCardData = vCardLines.join("\r\n");
+
+                        new QRCode(qrRef.current, {
+                            text: vCardData,
+                            width: 200,
+                            height: 200,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.L
+                        });
+                    }
+                };
+                const timer = setTimeout(generateQR, 500);
+                return () => clearTimeout(timer);
+            }, []);
+
+            return (
+                <header className="relative mb-16 md:mb-24">
+                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                        {/* Profile Image Area */}
+                        <div className="flex-shrink-0 relative group">
+                            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl relative z-10 bg-slate-800">
+                                <img 
+                                    src="/profile.jpg" 
+                                    alt="Syed Sajid" 
+                                    className="w-full h-full object-cover"
+                                    onLoad={() => console.log("Profile image loaded successfully")}
+                                    onError={(e) => {
+                                        console.error("Profile image failed to load, using fallback");
+                                        e.target.src = `https://ui-avatars.com/api/?name=Syed+Sajid&background=0891b2&color=fff&size=200`;
+                                    }}
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-cyan-400/10 rounded-full blur-2xl group-hover:bg-cyan-400/20 transition-all duration-500 -z-0"></div>
                         </div>
-                        <span className="font-medium">mailsyedsajid@gmail.com</span>
-                    </a>
-                    <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
-                        <div className="p-2 rounded-full bg-slate-800 group-hover:bg-cyan-900/30 transition-colors">
-                            <Icon name="linkedin" />
+
+                        {/* Name and Title Area */}
+                        <div className="flex-1 text-center lg:text-left">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-sky-400 tracking-tight">
+                                Syed Sajid
+                            </h1>
+                            <h2 className="mt-4 text-xl md:text-2xl font-medium text-cyan-300/90 leading-tight">
+                                Enterprise Applications & Integration Specialist
+                            </h2>
+                            <p className="mt-6 max-w-2xl text-lg text-slate-400 leading-relaxed">
+                                13+ years of experience driving enterprise integration, application governance, and digital transformation. Expert in architecting and managing Atlassian ecosystems and automating business processes.
+                            </p>
                         </div>
-                        <span className="font-medium">LinkedIn</span>
-                    </a>
-                    <div className="flex items-center gap-2.5 text-slate-300 group">
-                        <div className="p-2 rounded-full bg-slate-800">
-                            <Icon name="phone" className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <span className="font-medium">+971508355902</span>
                     </div>
-                    <div className="flex items-center gap-2.5 text-slate-300 group">
-                        <div className="p-2 rounded-full bg-slate-800">
-                            <Icon name="phone" className="w-5 h-5 text-cyan-400" />
+                    
+                    <div className="mt-12 flex flex-col md:flex-row items-center gap-10 border-t border-slate-800/50 pt-10">
+                        <div className="flex-1 flex flex-wrap items-center gap-x-10 gap-y-6">
+                            <a href="mailto:mailsyedsajid@gmail.com" className="flex items-center gap-3 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
+                                <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors">
+                                    <Icon name="mail" className="w-5 h-5 text-cyan-400" />
+                                </div>
+                                <span className="font-medium text-sm md:text-base">mailsyedsajid@gmail.com</span>
+                            </a>
+                            <a href="https://linkedin.com/in/syed-s-53a665aa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-cyan-300 transition-all duration-300 group">
+                                <div className="p-2.5 rounded-full bg-slate-800 group-hover:bg-cyan-900/40 transition-colors">
+                                    <Icon name="linkedin" className="w-5 h-5 text-cyan-400" />
+                                </div>
+                                <span className="font-medium">LinkedIn</span>
+                            </a>
+                            <div className="flex items-center gap-3 text-slate-300 group">
+                                <div className="p-2.5 rounded-full bg-slate-800">
+                                    <Icon name="phone" className="w-5 h-5 text-cyan-400" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-sm leading-tight">+971508355902</span>
+                                    <span className="font-medium text-xs leading-tight text-slate-500 mt-1">+918050374251</span>
+                                </div>
+                            </div>
                         </div>
-                        <span className="font-medium">+918050374251</span>
+
+                        {/* Large, Clear QR Code */}
+                        <div className="flex-shrink-0">
+                            <div className="group relative">
+                                <div className="p-3 bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-300 border border-slate-100">
+                                    <div ref={qrRef} className="rounded-lg overflow-hidden" style={{ width: '200px', height: '200px' }}></div>
+                                </div>
+                                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-900 text-[10px] font-bold text-cyan-400 px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-slate-800 uppercase tracking-widest">
+                                    Scan Contact
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </header>
-        );
+                </header>
+            );
+        };
 
         const Skills = () => {
             const skillsData = [

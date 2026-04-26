@@ -7,6 +7,7 @@ The application is deployed and can be viewed at:
 [https://ais-pre-blbqywqge4lxbuo6sbevi7-220733212679.europe-west2.run.app](https://ais-pre-blbqywqge4lxbuo6sbevi7-220733212679.europe-west2.run.app)
 
 ## ✨ Features
+- **Digital Business Card:** Offline QR code generation (vCard) for instant contact saving on iOS and Android.
 - **Zero Local Dependencies:** Now uses CDNs for React, Tailwind, and Motion. No `npm install` required for development or direct viewing.
 - **Modern UI/UX:** Built with Tailwind CSS for a sleek, dark-themed aesthetic.
 - **Responsive Design:** Fully optimized for mobile, tablet, and desktop views.
